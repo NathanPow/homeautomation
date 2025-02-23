@@ -29,8 +29,8 @@
 #include "time.h"
 #endif
 
-#ifndef _SNTP_H 
-#include "sntp.h"
+#ifndef ESP_SNTP_H 
+#include "esp_sntp.h"
 #endif
 
 

@@ -50,8 +50,8 @@ void MQTT_Connect( void * pvParameters ){
 
     while (!mqtt.connected() ) {        
 
-        char clientID[50]       = {0}; 
-        char clientName[50]     = {0};         
+        char clientID[70]       = {0}; 
+        char clientName[70]     = {0};         
 
         /* Intializes random number generator */
         time_t t;
