@@ -18,7 +18,7 @@ export const useMqttStore =  defineStore('mqtt', ()=>{
     const mqtt              = ref(null);
     const host              = ref("www.yanacreations.com");  // Host Name or IP address
     const port              = ref(9002);  // Port number
-    const payload           = ref({"id":620012345,"timestamp": 1702566538,"number":0,"ledA":0,"ledB":0}); // Set initial values for payload
+    const payload           = ref({"id":620163595,"type":"ultrasonic","radar":0,"waterheight":0,"reserve":0,"percentage": 0}); // Set initial values for payload
     const payloadTopic      = ref("");
     const subTopics         = ref({});
  
@@ -28,7 +28,7 @@ export const useMqttStore =  defineStore('mqtt', ()=>{
     
     const onSuccess = ()=> {
         // called when the connect acknowledgement has been received from the server.
-        // console.log(`Connected to: ${host.value}`);      
+        console.log(`Connected to: ${host.value}`);      
     }
 
     const onConnected = (reconnect,URI)=> {

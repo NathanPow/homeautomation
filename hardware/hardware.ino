@@ -52,7 +52,7 @@ uint8_t dig4 = 0;
 #define BTN_DIGIT 12 // Increment the currentDigit variable. If the variable becomes greater than 4, reset it to 1.
 #define BTN_CHECK 14 // Invoke the checkPasscode function
 #define BTN_UNLOCK 27 //  Set lockstate variable to false and invoke the showLockState function.
-#define pm 13
+#define pm 34
 #define TFT_DC    17
 #define TFT_CS    5
 #define TFT_RST   16
@@ -64,8 +64,6 @@ uint8_t dig4 = 0;
 #include <Fonts/FreeSansBold18pt7b.h>
 #include <Fonts/FreeSansBold9pt7b.h> 
 
- 
-
 
 // MQTT CLIENT CONFIG  
 static const char* pubtopic      = "620163595";                    // Add your ID number here
@@ -74,10 +72,10 @@ static const char* mqtt_server   = "www.yanacreations.com";         // Broker IP
 static uint16_t mqtt_port        = 1883;
 
 // WIFI CREDENTIALS
-//const char* ssid       = "MonaConnect"; // Add your Wi-Fi ssid 
-//const char* password   = ""; // Add your Wi-Fi password 
-const char* ssid       = "ARRIS-07B3"; // Add your Wi-Fi ssid
-const char* password   = "50A5DC0A07B3"; // Add your Wi-Fi password 
+const char* ssid       = "MonaConnect"; // Add your Wi-Fi ssid 
+const char* password   = ""; // Add your Wi-Fi password 
+//const char* ssid       = "ARRIS-07B3"; // Add your Wi-Fi ssid
+//const char* password   = "50A5DC0A07B3"; // Add your Wi-Fi password 
 
 // TASK HANDLES 
 TaskHandle_t xMQTT_Connect          = NULL; 
@@ -133,6 +131,8 @@ void setup() {
   pinMode(BTN_DIGIT, INPUT_PULLUP);
   pinMode(BTN_CHECK, INPUT_PULLUP);
   pinMode(BTN_UNLOCK, INPUT_PULLUP);
+
+
   //pinMode(pm, INPUT_PULLUP);
   //analogWrite(pm,0);
   tft.begin();
@@ -172,6 +172,7 @@ void loop() {
   // Map the potentiometer value to a range between 0 and 9
   mappedValue = map(potValue, 0, 4095, 0, 9);
   Serial.print(mappedValue);
+  Serial.print(" ");
   Serial.println(potValue);
   if(currentDigit == 1)
   {
@@ -308,11 +309,11 @@ void digit1(uint8_t number){
   // 1. Set font to FreeSansBold18pt7b 
   tft.setFont(&FreeSansBold18pt7b);
   // 2. Draw a filled rounded rectangle close to the bottom of the screen. Give it any colour you like 
-  tft.fillRoundRect(5, 260, 50, 50, 5, ILI9341_PURPLE);
+  tft.fillRoundRect(5, 260, 50, 50, 5, ILI9341_BLUE);
   // 3. Set cursor to the appropriate coordinates in order to write the number in the middle of the box 
   tft.setCursor(20,295);
   // 4. Set the text colour of the number. Use any colour you like 
-  tft.setTextColor(ILI9341_BLUE);
+  tft.setTextColor(ILI9341_RED);
   // 5. Set font size to one 
   tft.setTextSize(1);
   // 6. Print number to the screen 
@@ -324,11 +325,11 @@ void digit2(uint8_t number){
   // 1. Set font to FreeSansBold18pt7b 
   tft.setFont(&FreeSansBold18pt7b);
   // 2. Draw a filled rounded rectangle close to the bottom of the screen. Give it any colour you like 
-  tft.fillRoundRect(65, 260, 50, 50, 5, ILI9341_GREEN);
+  tft.fillRoundRect(65, 260, 50, 50, 5, ILI9341_BLUE);
   // 3. Set cursor to the appropriate coordinates in order to write the number in the middle of the box 
   tft.setCursor(80,295);
   // 4. Set the text colour of the number. Use any colour you like 
-  tft.setTextColor(ILI9341_BLUE);
+  tft.setTextColor(ILI9341_RED);
   // 5. Set font size to one 
   tft.setTextSize(1);
   // 6. Print number to the screen 
@@ -340,11 +341,11 @@ void digit3(uint8_t number){
   // 1. Set font to FreeSansBold18pt7b 
   tft.setFont(&FreeSansBold18pt7b);
   // 2. Draw a filled rounded rectangle close to the bottom of the screen. Give it any colour you like 
-  tft.fillRoundRect(125, 260, 50, 50, 5, ILI9341_PURPLE);
+  tft.fillRoundRect(125, 260, 50, 50, 5, ILI9341_BLUE);
   // 3. Set cursor to the appropriate coordinates in order to write the number in the middle of the box 
   tft.setCursor(140,295);
   // 4. Set the text colour of the number. Use any colour you like 
-  tft.setTextColor(ILI9341_BLUE);
+  tft.setTextColor(ILI9341_RED);
   // 5. Set font size to one 
   tft.setTextSize(1);
   // 6. Print number to the screen 
@@ -356,11 +357,11 @@ void digit4(uint8_t number){
   // 1. Set font to FreeSansBold18pt7b 
   tft.setFont(&FreeSansBold18pt7b);
   // 2. Draw a filled rounded rectangle close to the bottom of the screen. Give it any colour you like 
-  tft.fillRoundRect(185, 260, 50, 50, 5, ILI9341_GREEN);
+  tft.fillRoundRect(185, 260, 50, 50, 5, ILI9341_BLUE);
   // 3. Set cursor to the appropriate coordinates in order to write the number in the middle of the box 
   tft.setCursor(200,295);
   // 4. Set the text colour of the number. Use any colour you like 
-  tft.setTextColor(ILI9341_BLUE);
+  tft.setTextColor(ILI9341_RED);
   // 5. Set font size to one 
   tft.setTextSize(1);
   // 6. Print number to the screen 
@@ -376,7 +377,7 @@ void checkPasscode(void){
     if(WiFi.status()== WL_CONNECTED){ 
       
       // 1. REPLACE LOCALHOST IN THE STRING BELOW WITH THE IP ADDRESS OF THE COMPUTER THAT YOUR BACKEND IS RUNNING ON
-      http.begin(client, "http://192.168.0.6:8080/api/check/combination"); // Your Domain name with URL path or IP address with path 
+      http.begin(client, "http://172.16.193.22:8080/api/check/combination"); // Your Domain name with URL path or IP address with path 
  
       
       http.addHeader("Content-Type", "application/x-www-form-urlencoded"); // Specify content-type header      
@@ -423,9 +424,6 @@ void checkPasscode(void){
       http.end();
     }          
  }
-
-
-
 void showLockState(void){
   
     // Toggles the open and close lock images on the screen based on the lockState variable  
@@ -452,5 +450,4 @@ void showLockState(void){
       tft.setTextColor(ILI9341_RED); 
       tft.printf("Access Denied"); 
     }
-    
 }
